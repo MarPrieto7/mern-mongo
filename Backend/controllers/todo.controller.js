@@ -1,11 +1,11 @@
-import { Todo } from '../models/todo.model.js';
+import { Todo } from '../models/todoModel.js';
 
 export const getTodos = async (req, res) => {
     try {
         const todos = await Todo.find();
         res.status(200).json(todos);
     } catch (error) {
-        res.status(500).json({ message: "No muestra datos del servidor" }, error);
+        res.status(500).json({ message: "No muestra datos del servidor", error});
     }
 };
 //controlador metodo get un id
@@ -16,7 +16,7 @@ export const getATodo = async (req, res) => {
         res.status(200).json(todos);
         console.log(todos)
     } catch (error) {
-        res.status(500).json({ message: "No muestra datos del servidor" }, error);
+        res.status(500).json({ message: "No muestra datos del servidor", error });
     }
 };
 
@@ -33,7 +33,7 @@ export const createTodo = async (req, res) => {
         await todo.save();
         res.status(200).json({ message: "Todo ok", todo });
     } catch (error) {
-        res.status(500).json({ message: "No muestra datos del servidor" }, error);
+        res.status(500).json({ message: "No muestra datos del servidor", error });
     }
 };
 

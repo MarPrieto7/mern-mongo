@@ -1,13 +1,12 @@
 import express from "express";
-import { db } from './dataBase/db.js' 
-import todosRoutes from "./routes/routes.js"
-import authRoutes from './routes/authRoutes.js'
+import { db } from "./database/db.js";
+import unifiedRoutes from "./routes/routes.js"; // Importa el nuevo archivo de rutas unificado
+
 const app = express();
 
-app.use(express.json())
-app.use("/auth", authRoutes)
-app.use("/todos", todosRoutes )
+app.use(express.json());
+app.use("/", unifiedRoutes); // Utiliza las rutas unificadas en lugar de las rutas separadas
 
-db()
+db();
 
-app.listen(3000, console.log("Connected"));
+app.listen(3000, () => console.log("Se ha conectado")); // Asegúrate de usar una función de callback para el console.log

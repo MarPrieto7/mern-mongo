@@ -1,11 +1,26 @@
-import express from 'express';
-import { getTodos, createTodo, updateTodo, deleteTodo, getATodo } from '../controllers/todo.controller.js'; // Importa createTodo también
+import express from "express";
+import { Login, Register } from "../controllers/authController.js";
+import {
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  getATodo,
+} from "../controllers/todo.controller.js";
 
-const router = express.Router();
-router.get("/", getTodos);
-router.post("/", createTodo); 
-router.put("/update/:id", updateTodo); 
-router.delete("/:id", deleteTodo);
-router.get("/:id",getATodo);
+const authRouter = express.Router();
+authRouter.post("/register", Register);
+authRouter.post("/login", Login);
 
-export default router;
+const todoRouter = express.Router();
+todoRouter.get("/", getTodos);
+todoRouter.post("/", createTodo);
+todoRouter.put("/update/:id", updateTodo);
+todoRouter.delete("/:id", deleteTodo);
+todoRouter.get("/:id", getATodo);
+
+const unifiedRouter = express.Router();
+unifiedRouter.use("/auth", authRouter);
+unifiedRouter.use("/todos", todoRouter);
+
+export default unifiedRouter;
