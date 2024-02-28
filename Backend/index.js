@@ -1,13 +1,13 @@
 import express from "express";
-// const express = require("express");
-import {db} from "./database/db.js"
+import { db } from './dataBase/db.js' 
 import todosRoutes from "./routes/routes.js"
-
+import authRoutes from './routes/authRoutes.js'
 const app = express();
 
 app.use(express.json())
-app.listen(3000);
+app.use("/auth", authRoutes)
+app.use("/todos", todosRoutes )
 
-db();
+db()
 
-app.use("/todos", todosRoutes);
+app.listen(3000, console.log("Connected"));
