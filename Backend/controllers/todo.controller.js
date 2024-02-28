@@ -8,6 +8,17 @@ export const getTodos = async (req, res) => {
         res.status(500).json({ message: "No muestra datos del servidor" }, error);
     }
 };
+//controlador metodo get un id
+export const getATodo = async (req, res) => {
+    const id = req.params.id
+    try {
+        const todos = await Todo.findById({_id:id});
+        res.status(200).json(todos);
+        console.log(todos)
+    } catch (error) {
+        res.status(500).json({ message: "No muestra datos del servidor" }, error);
+    }
+};
 
 export const createTodo = async (req, res) => {
     const { title, task, type } = req.body;
@@ -18,7 +29,7 @@ export const createTodo = async (req, res) => {
             type: type
         });
         console.log(todo);
-        
+
         await todo.save();
         res.status(200).json({ message: "Todo ok", todo });
     } catch (error) {
@@ -31,6 +42,19 @@ export const updateTodo = async (req, res) => {
     console.log(id);
    try {
     await Todo.updateOne({_id:id}, req.body);
+    res.status(200).json({message: "Todo ok", id});
+   } catch (error) {
+    res.status(500).json({ message: "No muestra datos del servidor", error});
+   }
+}
+
+//Delete
+
+export const deleteTodo = async (req, res) => {
+    const id = req.params.id
+    console.log(id);
+   try {
+    await Todo.deleteOne({_id:id}, req.body);
     res.status(200).json({message: "Todo ok", id});
    } catch (error) {
     res.status(500).json({ message: "No muestra datos del servidor", error});
